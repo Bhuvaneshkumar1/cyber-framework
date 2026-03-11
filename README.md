@@ -64,7 +64,6 @@ cyber(recon)> run
 
 Cyber Framework follows a **modular architecture**.
 
-```
 
 ```
          +-------------------+
@@ -85,19 +84,19 @@ Cyber Framework follows a **modular architecture**.
       +------------+-------------+
       |                          |
       v                          v
-```
+
 
 +---------------+          +---------------+
 |  Core Engine  |          |    Modules    |
++---------------+          +---------------+
 |               |          |               |
 | Attack Chain  |          | Recon         |
 | Intelligence  |          | Scan          |
 | Scheduler     |          | Web Scan      |
 | Database      |          | Exploit       |
-| Attack Graph  |          | Discovery     |
-+---------------+          | Enumeration   |
-| Intelligence  |
-+---------------+
+| Attack Graph  |          | Discovery     |         
+| Intelligence  |          | Enumeration   |
++---------------+          +---------------+ 
 
 ```
 
