@@ -165,6 +165,13 @@ cd cyber-framework
 
 ```
 
+create virtual environment
+
+```
+python -m venv venv
+
+```
+
 Install dependencies:
 
 ```
