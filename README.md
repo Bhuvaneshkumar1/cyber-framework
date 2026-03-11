@@ -1,10 +1,12 @@
 # 🛡️ Cyber Framework
+![Cyber Framework Banner](Screenshots/banner.png)
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-green)
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
 ![Status](https://img.shields.io/badge/status-active-success)
 ![Maintained](https://img.shields.io/badge/maintained-yes-blue)
+![GitHub stars](https://img.shields.io/github/stars/Bhuvaneshkumar1/cyber-framework?style=social)
 
 A **modular cybersecurity CLI framework** written in Python designed for reconnaissance, scanning, vulnerability analysis, and automated attack chains.
 
@@ -16,7 +18,7 @@ The framework provides:
 - 🧠 Intelligence & attack graph generation
 - ⌨️ Professional interactive console
 
-Inspired by the architecture of professional frameworks like **Metasploit**.
+Inspired by penetration testing frameworks such as **Metasploit**.
 
 
 ```
@@ -366,3 +368,7 @@ Do **NOT** use this tool against systems without permission.
 # 📜 License
 
 MIT License
+
+# 👨‍💻 Contributors
+
+- Bhuvaneshkumar
