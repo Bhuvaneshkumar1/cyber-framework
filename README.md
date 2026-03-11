@@ -160,7 +160,7 @@ Clone repository:
 
 ```
 
-git clone [https://github.com/YOUR_USERNAME/cyber-framework.git](https://github.com/YOUR_USERNAME/cyber-framework.git)
+git clone https://github.com/Bhuvaneshkumar1/cyber-framework.git
 cd cyber-framework
 
 ```
