@@ -2,7 +2,7 @@ import questionary
 from core.utils import clear_terminal
 from ui.banner import show_banner
 from core.console import start_console
-from modules import recon, scan, web_scan, exploit, discovery,intelligence
+from modules import recon, scan, web_scan, exploit,intelligence
 from core.logger import log
 from core.attack_chain import run_attack_chain
 from core.database import init_db
@@ -55,10 +55,6 @@ elif mode == "Beginner Mode":
     elif choice == "Exploit":
         log("Exploit started")
         exploit.run(target)
-
-    elif choice == "discovery":
-        log("Discovery started")
-        discovery.run(target)
         
     elif choice == "intelligence":
         log("Intelligence started")
