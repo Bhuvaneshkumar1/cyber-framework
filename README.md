@@ -20,15 +20,28 @@ The framework provides:
 
 Inspired by penetration testing frameworks such as **Metasploit**.
 
+---
 
-```
+# ⭐ Why Cyber Framework
 
-cyber> show modules
-cyber> use recon
-cyber(recon)> set target google.com
-cyber(recon)> run
+Most cybersecurity tools focus on a **single capability** such as scanning, exploitation, or reconnaissance.
 
-```
+Cyber Framework integrates multiple phases of a penetration testing workflow into a **single modular CLI environment**, enabling security researchers to simulate realistic attack pipelines.
+
+Key objectives of the framework:
+
+• Provide a **Metasploit-style learning platform**  
+• Demonstrate **attack chain automation**  
+• Enable **modular security tool development**  
+• Provide an **interactive penetration testing console**
+
+This project is designed for:
+
+- Cybersecurity students
+- Ethical hackers
+- Security researchers
+- Developers building offensive security tools
+
 
 ---
 
@@ -52,6 +65,26 @@ cyber(recon)> run
 🌐 Network scanning modules  
 🕸 Web vulnerability scanning  
 ⚡ Exploit phase integration  
+
+
+
+### 🧠 Intelligence Engine
+
+The Intelligence Engine correlates reconnaissance and scanning results to build a **structured target profile**.
+
+Capabilities include:
+
+• Domain information analysis  
+• DNS record intelligence  
+• IP reputation correlation  
+• Attack surface mapping  
+
+The intelligence module can be extended to integrate with:
+
+- Threat intelligence feeds
+- OSINT databases
+- Vulnerability databases
+
 
 ### Advanced Capabilities
 📊 Attack Graph Generation  
@@ -199,6 +232,16 @@ pip install -r requirements.txt
 
 ---
 
+# 📦 Dependencies
+
+Major dependencies used in this project:
+
++ Python 3.10+
++ requests
++ rich
++ prompt_toolkit
++ sqlite3
+
 # ▶️ Running the Framework
 
 ```
@@ -233,6 +276,17 @@ Select Operation → Recon / Scan / Web Scan / Exploit / Attack Chain
 ```
 
 ---
+
+# 🎯 Use Cases
+
+Cyber Framework can be used for:
+
+ 1. Learning penetration testing workflows  
+ 2. Practicing reconnaissance and scanning techniques  
+ 3. Building custom cybersecurity modules  
+ 4. Demonstrating attack chain automation  
+ 5. Security research and experimentation
+--- 
 
 # 💻 Advanced Console Mode
 
@@ -283,6 +337,18 @@ cyber(recon)> run
 ```
 
 ---
+# 🔐 Security Philosophy
+
+Cyber Framework follows a modular offensive security philosophy:
+
+1. Discover the target surface
+2. Enumerate services
+3. Analyze vulnerabilities
+4. Build an attack path
+5. Execute exploitation chain
+
++ This approach mirrors real-world penetration testing methodologies.
+---
 
 # ⚔️ Automatic Attack Chain
 
@@ -310,6 +376,30 @@ cyber> run attack_chain
 ```
 
 ---
+---
+
+# 📊 Attack Graph Visualization
+
+Cyber Framework generates a logical **attack graph** representing relationships between discovered assets and vulnerabilities.
+
+Example flow:
+
+Target Domain
+↓
+Resolved IP
+↓
+Open Ports
+↓
+Detected Services
+↓
+Potential Exploits
+
+This allows researchers to understand:
+
++ Attack paths
++ Service exposure
++ Exploitation opportunities  
+---
 
 # ⌨️ Console Features
 
@@ -329,6 +419,34 @@ cyber(recon)> run
 
 ```
 
+---
+---
+
+# 🧪 Example Workflow
+
+Example penetration testing workflow using Cyber Framework.
+
+Step 1 — Start the framework
+
+cyber> show modules
+
+Step 2 — Select reconnaissance module
+
+cyber> use recon
+
+Step 3 — Set target
+
+cyber(recon)> set target example.com
+
+Step 4 — Execute module
+
+cyber(recon)> run
+
+Step 5 — Run full attack chain
+```
+cyber> set target example.com
+cyber> run attack_chain
+```
 ---
 
 # 🧩 Available Modules
@@ -365,12 +483,35 @@ Additional documentation:
 
 ---
 
+# 🛠 Troubleshooting
+
+Common issues and solutions.
+
+**Issue:** Modules not loading
+
+**Solution:** Check the modules directory and ensure Python files follow the module structure.
+
+Issue: Command history not saved
+
+**Solution:** Ensure the `data/command_history.txt` file exist
+---
+
 # 🧑‍💻 Author
 
 Developed as a **modular cybersecurity framework for learning and research purposes.**
 
 ---
 
+# 📊 Project Statistics
+
+Project metrics:
+
++ Language: Python
++ Architecture: Modular CLI Framework
++ Database: SQLite
++ Interface: Interactive Console
++ Modules: Recon, Scan, Web Scan, Exploit, Intelligence
+---
 # ⚠️ Disclaimer
 
 This tool is intended **for educational and authorized security testing only**.
@@ -379,9 +520,44 @@ Do **NOT** use this tool against systems without permission.
 
 ---
 
+# ⭐ Support the Project
+
+If you find this project useful:
+
++ ⭐ Star the repository  
++ 🍴 Fork the project  
++ 🛠 Contribute modules  
++ 🐞 Report issues
+---
+# 🔧 Planned Features
+
+Future improvements planned for Cyber Framework:
+
++ Machine learning assisted vulnerability detection
++ AI-assisted attack chain planning
++ Web dashboard interface
++ API based distributed scanning nodes
++ Integration with vulnerability scanners
++ Automated report generation
+---
 # 📜 License
 
 MIT License
+
+---
+
+# 🏆 Project Highlights
+
+Cyber Framework demonstrates several advanced engineering concepts:
+
+• Modular cybersecurity architecture  
+• Interactive CLI framework design  
+• Automated attack chain orchestration  
+• Distributed scanning capability  
+• Intelligence driven reconnaissance  
+
+The project is designed as a **research oriented penetration testing framework** and learning platform for cybersecurity practitioners.
+---
 
 # 👨‍💻 Contributors
 
