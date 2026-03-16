@@ -323,8 +323,6 @@ cyber(recon)> run
 | scan | Network port scanning |
 | web_scan | Web vulnerability scanning |
 | exploit | Exploitation phase |
-| discovery | Host discovery |
-| enumeration | Target enumeration |
 | intelligence | Target intelligence gathering |
 
 ---
