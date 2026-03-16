@@ -18,6 +18,7 @@ commands = [
     "run",
     "show",
     "exit",
+    "man",
     "attack_chain",
     "target"
 ]
