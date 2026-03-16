@@ -1,0 +1,47 @@
+NAME 
+	scan - network detection nand service detection module. 
+
+DESCRIPTION
+	Perform network reconnaissance against a specified target using nmap.
+	The module execute a full TCP SYN scan across all ports and attempts
+	service and operating system detection.
+
+UNDERLYING TOOL
+	nmap 
+
+EXECUTION
+	sudo nmap -sS -p- -T4 -A -Pn <target>
+
+USAGE
+	use scan
+
+MODULE OPTION
+	target - target domain or IP.
+
+COMMANDS 
+	show modules
+		Display available modules.
+
+	set target<domain>
+		Define the target domain.
+
+	run
+		Execute the reconnaissance module.
+
+EXAMPLE 
+	use scan
+	set target example.com
+	run
+
+OUTPUT
+	Display open ports ,detected services and possible operating system
+	information discovered during scanning.
+
+REQUIREMENTS
+	nmap must be installed and available in system path.
+
+AUTHOR 
+	Bhuvanesh kumar
+
+VERSION
+	Verion 1.0

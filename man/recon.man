@@ -1,0 +1,44 @@
+NAME
+	recon - reconnaissance and information gathering module.
+
+DESCRIPTION
+	Perform passive reconnaissance on a target domain using TheHarvester. The module collects publicly 
+	available information such as emails,subdomains ,hosts and related infrastructure from open source.
+
+UNDERLYING TOOL
+	theHarvester
+
+EXECUTION
+	theHarvester -d <target> -b google
+
+USAGE
+	use recon
+
+MODULE OPTION
+	target - target domain or IP.
+
+COMMANDS 
+	show modules
+		Display available modules.
+
+	set target<domain>
+		Define the target domain.
+
+	run
+		Execute the reconnaissance module.
+EXAMPLE 
+	use recon
+	set target example.com
+	run
+
+OUTPUT
+	Display discovered email address , hostname, and subdomains related to the specified domain.
+
+REQUIREMENTS
+	theHarvester must be installed and available in the system path.
+
+AUTHOR 
+	Bhuvanesh kumar
+
+VERSION
+	Verion 1.0

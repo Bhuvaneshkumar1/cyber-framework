@@ -1,0 +1,47 @@
+NAME 
+	web_scan - web server vulnerability scanning module. 
+
+DESCRIPTION
+	Perform vulnerability scanning against web server using the Nikto web scanner.
+    The module identifies insecure configurations,outdated server components, and 
+    common web vulnerabilities.
+
+UNDERLYING TOOL
+	nikto 
+
+EXECUTION
+	nikto -h <target>
+
+USAGE
+	use web_scan
+
+MODULE OPTION
+	target - target domain or IP.
+
+COMMANDS 
+	show modules
+		Display available modules.
+
+	set target<domain>
+		Define the target domain.
+
+	run
+		Execute the reconnaissance module.
+
+EXAMPLE 
+	use scan
+	set target example.com
+	run
+
+OUTPUT
+	Display discovered web server vulnerabilities,exposed files and 
+    configuration weakness.
+
+REQUIREMENTS
+	nikto must be installed and available in system path.
+
+AUTHOR 
+	Bhuvanesh kumar
+
+VERSION
+	Verion 1.0
