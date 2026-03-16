@@ -114,6 +114,7 @@ Detailed architecture available in:
 
 cyber-framework/
 │
+|── README.md
 ├── main.py
 ├── requirements.txt
 ├── config.json
@@ -129,6 +130,18 @@ cyber-framework/
 │   ├── attack_graph.py
 │   ├── database.py
 │   ├── scheduler.py
+|   |── advanced_console.py
+|   |── console_style.py
+|   |── logger.py
+|   |── man_viewer.py
+|   |── module_info.py
+|   |── os_detection.py
+|   |── output.py
+|   |── pipeline.py
+|   |── report.py
+|   |── syntax_highligher.py
+|   |── tool_detection.py
+|   |── utils.py
 │   └── distributed_controller.py
 │
 ├── modules/
@@ -136,10 +149,13 @@ cyber-framework/
 │   ├── scan.py
 │   ├── web_scan.py
 │   ├── exploit.py
-│   ├── discovery.py
-│   ├── enumeration.py
 │   └── intelligence.py
 │
+|──man/
+|   |── recon.man
+|   |── scan.man
+|   |── web_scan.man
+|   └── exploit.man
 ├── ui/
 │   └── banner.py
 │
