@@ -70,11 +70,12 @@ def save_port(target: str, port: int, service: str = "unknown", timestamp: str |
     ts = timestamp or datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     path = Path(db_path) if db_path else get_db_path()
 
+    # Ensure DB is initialized before opening connection
+    init_db(path)
+
     try:
         with sqlite3.connect(str(path)) as conn:
             c = conn.cursor()
-            # Ensure DB is initialized
-            init_db(path)
 
             c.execute("PRAGMA table_info(scans)")
             existing_cols = [col[1] for col in c.fetchall()]

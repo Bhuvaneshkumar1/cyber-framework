@@ -1,8 +1,12 @@
-from rich.console import Console
-from rich.tree import Tree
-from rich.table import Table
-
-console = Console()
+try:
+    from rich.console import Console
+    from rich.tree import Tree
+    from rich.table import Table
+    _HAS_RICH = True
+    console = Console()
+except ImportError:
+    _HAS_RICH = False
+    console = None
 
 try:
     import networkx as nx
@@ -75,42 +79,53 @@ def get_graph_data() -> dict:
 
 
 def show_graph():
-    """Display the attack graph visually in the console using Rich."""
+    """Display the attack graph visually in the console using Rich or plain text fallback."""
     if not graph.nodes:
-        console.print("[yellow]Attack Graph is currently empty. Run a scan to map targets and ports.[/yellow]")
+        if _HAS_RICH and console is not None:
+            console.print("[yellow]Attack Graph is currently empty. Run a scan to map targets and ports.[/yellow]")
+        else:
+            print("Attack Graph is currently empty. Run a scan to map targets and ports.")
         return
 
-    tree = Tree("[bold cyan]Attack Surface & Path Graph[/bold cyan]")
+    if _HAS_RICH and console is not None:
+        tree = Tree("[bold cyan]Attack Surface & Path Graph[/bold cyan]")
 
-    # Identify root targets
-    target_nodes = [n for n in graph.nodes if str(n).startswith("Target:")]
-    other_nodes = [n for n in graph.nodes if not str(n).startswith("Target:")]
+        # Identify root targets
+        target_nodes = [n for n in graph.nodes if str(n).startswith("Target:")]
 
-    if target_nodes:
-        for t in sorted(target_nodes, key=str):
-            branch = tree.add(f"[bold green]{t}[/bold green]")
-            # Find direct edges from this target
-            connected_edges = [edge for edge in graph.edges if edge[0] == t]
-            for _, child in connected_edges:
-                sub_branch = branch.add(f"[cyan]{child}[/cyan]")
-                # Secondary edges
-                sec_edges = [edge for edge in graph.edges if edge[0] == child]
-                for _, leaf in sec_edges:
-                    sub_branch.add(f"[yellow]{leaf}[/yellow]")
+        if target_nodes:
+            for t in sorted(target_nodes, key=str):
+                branch = tree.add(f"[bold green]{t}[/bold green]")
+                # Find direct edges from this target
+                connected_edges = [edge for edge in graph.edges if edge[0] == t]
+                for _, child in connected_edges:
+                    sub_branch = branch.add(f"[cyan]{child}[/cyan]")
+                    # Secondary edges
+                    sec_edges = [edge for edge in graph.edges if edge[0] == child]
+                    for _, leaf in sec_edges:
+                        sub_branch.add(f"[yellow]{leaf}[/yellow]")
+        else:
+            for node in sorted(graph.nodes, key=str):
+                tree.add(f"[green]{node}[/green]")
+
+        console.print(tree)
+
+        if graph.edges:
+            table = Table(title="Attack Path Edges")
+            table.add_column("Origin Node", style="cyan")
+            table.add_column("Relationship", style="magenta")
+            table.add_column("Destination Node", style="green")
+
+            for u, v in sorted(graph.edges, key=lambda x: (str(x[0]), str(x[1]))):
+                table.add_row(str(u), "-->", str(v))
+
+            console.print(table)
     else:
-        # Generic representation
+        print("=== Attack Surface & Path Graph ===")
         for node in sorted(graph.nodes, key=str):
-            tree.add(f"[green]{node}[/green]")
-
-    console.print(tree)
-
-    if graph.edges:
-        table = Table(title="Attack Path Edges")
-        table.add_column("Origin Node", style="cyan")
-        table.add_column("Relationship", style="magenta")
-        table.add_column("Destination Node", style="green")
-
-        for u, v in sorted(graph.edges, key=lambda x: (str(x[0]), str(x[1]))):
-            table.add_row(str(u), "-->", str(v))
-
-        console.print(table)
+            print(f"Node: {node}")
+        if graph.edges:
+            print("Edges:")
+            for u, v in sorted(graph.edges, key=lambda x: (str(x[0]), str(x[1]))):
+                print(f"  {u} --> {v}")
+        print("===================================")

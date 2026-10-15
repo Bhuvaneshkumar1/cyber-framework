@@ -4,7 +4,10 @@ from core.tool_detection import tool_exists
 from core.logger import log
 from core.utils import validate_target, safe_run_subprocess, is_target_in_scope, ModuleResult
 from core.session_manager import is_target_authorized
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 
 
 def run(target: str | None) -> ModuleResult:

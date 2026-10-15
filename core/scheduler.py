@@ -3,6 +3,11 @@ from core.session_manager import is_target_authorized
 from core.logger import log
 
 try:
+    from rich import print
+except ImportError:
+    pass
+
+try:
     from apscheduler.schedulers.background import BackgroundScheduler
     APSCHEDULER_AVAILABLE = True
 except ImportError:

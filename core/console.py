@@ -28,6 +28,10 @@ def get_command_completer():
         "run",
         "show",
         "exit",
+        "quit",
+        "back",
+        "clear",
+        "cls",
         "man",
         "help",
         "attack_chain",
@@ -36,6 +40,7 @@ def get_command_completer():
         "modules",
         "info",
         "session",
+        "options",
         "config",
         "graph",
         "scans",
@@ -79,7 +84,7 @@ def start_console():
             continue
 
         trimmed = cmd.strip()
-        if trimmed == "exit":
+        if trimmed in ("exit", "quit"):
             console.print("[green]Exiting Cyber Framework...[/green]")
             break
 

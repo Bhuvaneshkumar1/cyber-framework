@@ -7,7 +7,10 @@ from core.database import save_port
 from core.utils import validate_target, safe_run_subprocess, is_target_in_scope, ModuleResult
 from core.session_manager import is_target_authorized
 from core.logger import log
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 
 # Default non-intrusive port list for native fallback scanning
 COMMON_PORTS = [21, 22, 25, 53, 80, 110, 143, 443, 445, 993, 995, 3306, 3389, 8080, 8443]

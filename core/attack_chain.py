@@ -3,7 +3,10 @@ from modules import recon, scan, web_scan, exploit
 from core.logger import log
 from core.utils import validate_target, is_target_in_scope
 from core.session_manager import is_target_authorized, is_intrusive_allowed
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 
 
 def run_attack_chain(target: str | None, include_exploit: bool = False):

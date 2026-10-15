@@ -357,6 +357,12 @@ def parse_command(command: str):
         clear_terminal()
         return
 
+    # Exit / quit
+    elif cmd in ("exit", "quit"):
+        import sys
+        console.print("[green]Exiting Cyber Framework...[/green]")
+        sys.exit(0)
+
     # Unknown command fallback
     else:
         console.print(f"[yellow]Unknown command: '{command}'. Type 'help' to see available commands.[/yellow]")

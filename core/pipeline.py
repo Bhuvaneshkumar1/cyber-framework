@@ -3,7 +3,10 @@ from modules import recon, scan, web_scan, exploit, intelligence
 from core.utils import validate_target, is_target_in_scope, save_json_file, load_json_file, PROJECT_ROOT
 from core.session_manager import is_target_authorized, is_intrusive_allowed
 from core.logger import log
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 
 
 def run_pipeline(target: str | None, include_exploit: bool = False) -> dict:

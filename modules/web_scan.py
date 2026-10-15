@@ -1,3 +1,4 @@
+import ssl
 import urllib.request
 import urllib.error
 from urllib.parse import urlparse
@@ -5,7 +6,10 @@ from core.tool_detection import tool_exists
 from core.utils import validate_target, safe_run_subprocess, is_target_in_scope, ModuleResult
 from core.session_manager import is_target_authorized
 from core.logger import log
-from rich import print
+try:
+    from rich import print
+except ImportError:
+    pass
 
 SECURITY_HEADERS = [
     "Content-Security-Policy",
@@ -21,6 +25,7 @@ def inspect_http_headers(url: str, timeout: float = 8.0) -> tuple[bool, list[dic
     """
     Lightweight, unprivileged HTTP header inspector.
     Inspects server banners, redirects, and missing defensive security headers without external tools.
+    Supports lab/self-signed SSL targets via unverified SSL context.
     """
     findings = []
     output_lines = [f"HTTP Inspection Results for {url}:"]
@@ -31,8 +36,13 @@ def inspect_http_headers(url: str, timeout: float = 8.0) -> tuple[bool, list[dic
         method="GET"
     )
 
+    # Permit assessment of local security lab/CTF targets with self-signed SSL certs
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as response:
+        with urllib.request.urlopen(req, timeout=timeout, context=ssl_context) as response:
             status_code = response.getcode()
             response_url = response.geturl()
             headers = dict(response.info())

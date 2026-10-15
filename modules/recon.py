@@ -98,16 +98,27 @@ def run(target: str | None) -> ModuleResult:
             raw_output = res.stdout
             show_output("DNS Lookup (nslookup)", raw_output)
 
+            in_answer_section = False
             for line in raw_output.splitlines():
                 line_str = line.strip()
-                if "Address:" in line_str or "Addresses:" in line_str:
-                    parts = line_str.split(":", 1)
-                    if len(parts) > 1 and parts[1].strip():
-                        findings.append({"type": "dns_address", "value": parts[1].strip()})
-                elif "Name:" in line_str:
+                if "Non-authoritative answer:" in line_str or "Name:" in line_str:
+                    in_answer_section = True
+
+                if "Name:" in line_str:
                     parts = line_str.split(":", 1)
                     if len(parts) > 1 and parts[1].strip():
                         findings.append({"type": "canonical_name", "value": parts[1].strip()})
+                elif in_answer_section and ("Address:" in line_str or "Addresses:" in line_str):
+                    parts = line_str.split(":", 1)
+                    if len(parts) > 1 and parts[1].strip():
+                        findings.append({"type": "dns_address", "value": parts[1].strip()})
+                elif in_answer_section and line.startswith((" ", "\t")) and line_str:
+                    try:
+                        import ipaddress
+                        ipaddress.ip_address(line_str)
+                        findings.append({"type": "dns_address", "value": line_str})
+                    except ValueError:
+                        pass
 
             if findings:
                 return ModuleResult(

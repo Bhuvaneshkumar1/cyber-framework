@@ -39,10 +39,17 @@ def generate_report(
     filename = f"report_{clean_target_filename}_{timestamp}.{format_clean}"
     file_path = out_dir / filename
 
+    if isinstance(findings, list):
+        total_items = len(findings)
+    elif isinstance(findings, dict):
+        total_items = len(findings.keys())
+    else:
+        total_items = 0 if findings is None else 1
+
     report_metadata = {
         "target": target,
         "generated_at": datetime.datetime.now().isoformat(),
-        "total_items": len(findings) if isinstance(findings, list) else len(findings.keys()),
+        "total_items": total_items,
         **(metadata or {})
     }
 
@@ -104,6 +111,9 @@ def generate_report(
                     html_lines.append(f"        <tr><td><strong>{safe_key}</strong></td><td><pre>{safe_val}</pre></td></tr>")
                 html_lines.append("      </tbody>")
                 html_lines.append("    </table>")
+            else:
+                safe_val = html.escape(str(findings or "No findings recorded."))
+                html_lines.append(f"    <p><pre>{safe_val}</pre></p>")
 
             html_lines.extend([
                 "  </div>",
@@ -131,6 +141,8 @@ def generate_report(
             elif isinstance(findings, dict):
                 for k, v in findings.items():
                     txt_lines.append(f"[{k}]: {json.dumps(v, indent=2) if isinstance(v, (dict, list)) else str(v)}")
+            else:
+                txt_lines.append(str(findings or "No findings recorded."))
             txt_lines.extend(["", "=" * 60, "END OF REPORT", "=" * 60])
 
             with open(file_path, "w", encoding="utf-8") as f:
