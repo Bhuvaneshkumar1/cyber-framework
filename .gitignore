@@ -3,18 +3,39 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.egg-info/
+dist/
+build/
+
+# Testing & Coverage
+.pytest_cache/
+.benchmarks/
+.coverage
+htmlcov/
 
 # Virtual environments
 venv/
 env/
 myvenv/
+.venv/
+
+# Environment and local secrets
+.env
+*.pem
+*.key
 
 # Logs
 *.log
 scan.log
 
-# Database
+# Databases & Runtime State
 *.db
+cyber_framework.db
+data/*.tmp
+data/*.corrupt
+
+# Generated Reports
+reports/
 
 # OS files
 .DS_Store

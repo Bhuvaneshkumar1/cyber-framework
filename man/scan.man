@@ -1,16 +1,18 @@
-NAME 
-	scan - network detection nand service detection module. 
+NAME
+	scan - network port and service detection module.
 
 DESCRIPTION
-	Perform network reconnaissance against a specified target using nmap.
-	The module execute a full TCP SYN scan across all ports and attempts
-	service and operating system detection.
+	Perform network port scanning against a validated target. The module
+	identifies open TCP ports and service banners using nmap. If nmap is
+	not installed or unavailable in PATH, it seamlessly falls back to a
+	pure-Python multi-threaded TCP socket port scanner for standard common ports.
 
 UNDERLYING TOOL
-	nmap 
+	nmap (with native Python socket fallback)
 
 EXECUTION
-	sudo nmap -sS -p- -T4 -A -Pn <target>
+	nmap -sT -Pn -F <target>
+	(Fallback: native Python socket connect across common ports)
 
 USAGE
 	use scan
@@ -18,30 +20,30 @@ USAGE
 MODULE OPTION
 	target - target domain or IP.
 
-COMMANDS 
+COMMANDS
 	show modules
 		Display available modules.
 
-	set target<domain>
-		Define the target domain.
+	set target <domain/ip>
+		Define the target domain or IP address.
 
 	run
-		Execute the reconnaissance module.
+		Execute the port scanning module.
 
-EXAMPLE 
+EXAMPLE
 	use scan
-	set target example.com
+	set target 127.0.0.1
 	run
 
 OUTPUT
-	Display open ports ,detected services and possible operating system
-	information discovered during scanning.
+	Structured list of open ports, protocol, service names, and
+	persisted database records in SQLite.
 
 REQUIREMENTS
-	nmap must be installed and available in system path.
+	nmap (optional, recommended); built-in socket scanner used as fallback.
 
-AUTHOR 
-	Bhuvanesh kumar
+AUTHOR
+	Bhuvaneshkumar
 
 VERSION
-	Verion 1.0
+	Version 1.0

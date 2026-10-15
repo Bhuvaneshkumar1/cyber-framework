@@ -1,47 +1,51 @@
-NAME 
-	web_scan - web server vulnerability scanning module. 
+NAME
+	web_scan - web server vulnerability and configuration scanner.
 
 DESCRIPTION
-	Perform vulnerability scanning against web server using the Nikto web scanner.
-    The module identifies insecure configurations,outdated server components, and 
-    common web vulnerabilities.
+	Perform web vulnerability and security configuration analysis against
+	HTTP/HTTPS services. When Nikto is installed, it runs a web scan to identify
+	misconfigurations, outdated software, and known vulnerabilities. When Nikto
+	is absent, it automatically uses the native Python HTTP security inspector
+	to audit security headers (HSTS, CSP, X-Frame-Options, X-Content-Type-Options)
+	and server exposure.
 
 UNDERLYING TOOL
-	nikto 
+	nikto (with native HTTP security header inspector fallback)
 
 EXECUTION
-	nikto -h <target>
+	nikto -h <target> -Tuning 123b -ask no
+	(Fallback: native requests / urllib HTTP security header inspection)
 
 USAGE
 	use web_scan
 
 MODULE OPTION
-	target - target domain or IP.
+	target - target URL, hostname, or IP address.
 
-COMMANDS 
+COMMANDS
 	show modules
 		Display available modules.
 
-	set target<domain>
-		Define the target domain.
+	set target <url/host>
+		Define the target URL or web host.
 
 	run
-		Execute the reconnaissance module.
+		Execute the web scanning module.
 
-EXAMPLE 
-	use scan
-	set target example.com
+EXAMPLE
+	use web_scan
+	set target http://127.0.0.1:8080
 	run
 
 OUTPUT
-	Display discovered web server vulnerabilities,exposed files and 
-    configuration weakness.
+	Structured findings containing identified web vulnerabilities,
+	missing security headers, and server banner details.
 
 REQUIREMENTS
-	nikto must be installed and available in system path.
+	nikto (optional); Python requests/urllib standard libraries used as fallback.
 
-AUTHOR 
-	Bhuvanesh kumar
+AUTHOR
+	Bhuvaneshkumar
 
 VERSION
-	Verion 1.0
+	Version 1.0

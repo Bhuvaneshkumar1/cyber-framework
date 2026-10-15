@@ -1,7 +1,7 @@
 # 🛡️ Cyber Framework
 ![Cyber Framework Banner](Screenshots/banner.png)
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-blue?logo=python)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-green)
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
 ![Status](https://img.shields.io/badge/status-active-success)
@@ -12,13 +12,13 @@ A **modular cybersecurity CLI framework** written in Python designed for reconna
 
 The framework provides:
 
-- 🟢 Beginner Mode (menu-based)
-- 💻 Advanced Console Mode
-- ⚔️ Automated Attack Chain Engine
-- 🧠 Intelligence & attack graph generation
-- ⌨️ Professional interactive console
-
-Inspired by penetration testing frameworks such as **Metasploit**.
+- 🟢 **Beginner Mode**: Guided menu-driven interface
+- 💻 **Advanced Console Mode**: Metasploit-style interactive CLI
+- ⚔️ **Automated Attack Chain**: Multi-stage reconnaissance and scanning workflows
+- 📊 **Attack Graph Visualization**: Structural attack surface mapping
+- 🗄 **SQLite Findings Database**: Transaction-safe persistence and history tracking
+- 📋 **Multi-Format Reporting**: Text, JSON, and XSS-sanitized HTML report exports
+- 🛡 **Built-in Safety & Scope Enforcement**: Strict authorization boundaries and opt-in intrusive testing
 
 ---
 
@@ -26,539 +26,395 @@ Inspired by penetration testing frameworks such as **Metasploit**.
 
 Most cybersecurity tools focus on a **single capability** such as scanning, exploitation, or reconnaissance.
 
-Cyber Framework integrates multiple phases of a penetration testing workflow into a **single modular CLI environment**, enabling security researchers to simulate realistic attack pipelines.
+Cyber Framework integrates multiple phases of a penetration testing workflow into a **single modular CLI environment**, enabling security researchers and students to simulate realistic attack pipelines.
 
 Key objectives of the framework:
 
-• Provide a **Metasploit-style learning platform**  
-• Demonstrate **attack chain automation**  
-• Enable **modular security tool development**  
-• Provide an **interactive penetration testing console**
+- Provide a **Metasploit-style learning platform**
+- Demonstrate **attack chain automation** with safety boundaries
+- Enable **modular security tool development** with clean contracts
+- Provide an **interactive penetration testing console** with TAB auto-completion
 
 This project is designed for:
 
 - Cybersecurity students
 - Ethical hackers
 - Security researchers
-- Developers building offensive security tools
-
+- Developers building offensive and defensive security tools
 
 ---
 
 # 🚀 Features
 
 ### Core Framework
-✅ Beginner Mode  
-✅ Advanced Console Mode  
-✅ Automatic Module Discovery  
-✅ Automated Attack Chain Engine  
-✅ Real-time Scan Progress  
+- ✅ Beginner Mode (interactive guided menu)
+- ✅ Advanced Console Mode (interactive CLI with custom prompt)
+- ✅ Automatic Module Discovery (dynamic loading from `modules/`)
+- ✅ Automated Multi-stage Attack Chain (`Recon` -> `Scan` -> `Web Scan`)
+- ✅ Multi-Stage Pipeline Runner (`run pipeline`)
+- ✅ SQLite Persistent Scan Database (`cyber_framework.db`)
+- ✅ Atomic JSON Results & Session State Storage
+- ✅ Real-time Execution Spinners (honest status tracking)
 
-### Console Experience
-⌨️ TAB command auto-completion  
-🧠 Syntax highlighted commands  
-📜 Persistent command history  
-🎯 Dynamic module prompt  
+### Interactive Console Experience
+- ⌨️ TAB command auto-completion
+- 🧠 Syntax-highlighted commands
+- 📜 Persistent command history (`data/command_history.txt`)
+- 🎯 Dynamic module prompt (`cyber(recon)>`)
+- 📖 Built-in Manual Viewer (`man <module>`)
 
-### Security Engine
-🔍 Reconnaissance modules  
-🌐 Network scanning modules  
-🕸 Web vulnerability scanning  
-⚡ Exploit phase integration  
-
-
-
-### 🧠 Intelligence Engine
-
-The Intelligence Engine correlates reconnaissance and scanning results to build a **structured target profile**.
-
-Capabilities include:
-
-• Domain information analysis  
-• DNS record intelligence  
-• IP reputation correlation  
-• Attack surface mapping  
-
-The intelligence module can be extended to integrate with:
-
-- Threat intelligence feeds
-- OSINT databases
-- Vulnerability databases
-
+### Security Modules
+- 🔍 **recon**: Domain and DNS reconnaissance (`theHarvester` with native DNS fallback)
+- 🌐 **scan**: Network port and service scanning (unprivileged `nmap` with native TCP socket scanner fallback)
+- 🕸 **web_scan**: Web vulnerability and header inspection (`nikto` with native HTTP security header inspection fallback)
+- ⚡ **exploit**: Targeted SQL injection testing (`sqlmap`, strictly requiring explicit intrusive authorization)
+- 🧠 **intelligence**: Empirical DNS and network service correlation distinguishing facts from heuristics
 
 ### Advanced Capabilities
-📊 Attack Graph Generation  
-🧠 Intelligence Engine  
-🗄 SQLite Scan Database  
-⏱ Scan Scheduler  
-🌍 Distributed scanning support  
+- 📊 **Attack Graph Generation**: Structural graph showing Target -> Port -> Service relationships (`show graph`)
+- 📄 **Multi-Format Reporting**: Generate text, JSON, or styled HTML reports (`report html`)
+- ⏱ **Task Scheduler**: Background recurring scans (backed by `apscheduler`)
+- 🌍 **Distributed Controller**: Proof-of-concept socket agent for distributed scans (experimental, disabled by default)
+
+---
+
+# 🔐 Security & Safety Architecture
+
+Cyber Framework is designed with explicit defensive controls:
+
+1. **Target Validation**: All targets are strictly validated against injection characters (`;`, `&`, `|`, `` ` ``, `$`, `\n`) and option injection (leading `-` or `/`).
+2. **Scope Enforcement**: Configured via `config.json`. Out-of-scope targets are rejected before executing any network operations.
+3. **Opt-in Intrusive Testing**: Exploitation actions are **never** executed automatically in default workflows. Intrusive testing requires explicit authorization (`set intrusive true`).
+4. **Subprocess Argument Vectors**: Subprocess calls avoid shell string interpolation (`shell=False`) with fixed timeouts to prevent hangs.
+5. **Credential Redaction**: Passwords, API tokens, and Basic Auth credentials are automatically scrubbed from runtime logs.
 
 ---
 
 # 🏗 Architecture
-
-Cyber Framework follows a **modular architecture**.
-
 
 ```
          +-------------------+
          |      main.py      |
          +---------+---------+
                    |
-                   v
-           +--------------+
-           |   Console    |
-           +--------------+
+         +---------+---------+
+         |                   |
+         v                   v
+ +---------------+   +---------------+
+ | Beginner Mode |   | Advanced CLI  |
+ +---------------+   +---------------+
+         |                   |
+         +---------+---------+
                    |
                    v
-            +-----------+
-            | Command   |
-            |  Parser   |
-            +-----------+
-                   |
-      +------------+-------------+
-      |                          |
-      v                          v
-
-
+            +--------------+
+            | Command      |
+            | Parser       |
+            +-------+------+
+                    |
+       +------------+-------------+
+       |                          |
+       v                          v
 +---------------+          +---------------+
 |  Core Engine  |          |    Modules    |
 +---------------+          +---------------+
-|               |          |               |
-| Attack Chain  |          | Recon         |
-| Intelligence  |          | Scan          |
-| Scheduler     |          | Web Scan      |
-| Database      |          | Exploit       |
-| Attack Graph  |          | Discovery     |         
-| Intelligence  |          | Enumeration   |
-+---------------+          +---------------+ 
-
+| Session State |          | recon         |
+| Scope Policy  |          | scan          |
+| Safe Runners  |          | web_scan      |
+| Attack Chain  |          | exploit       |
+| Pipeline      |          | intelligence  |
+| Attack Graph  |          +---------------+
+| Reporting     |
+| SQLite DB     |
++---------------+
 ```
 
-Detailed architecture available in:
-
-📄 `docs/architecture.md`
+Detailed component descriptions are available in [docs/architecture.md](docs/architecture.md).
 
 ---
 
 # 📁 Project Structure
 
-```
-
+```text
 cyber-framework/
-│
-|── README.md
-├── main.py
-├── requirements.txt
-├── config.json
-│
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # GitHub Actions CI workflow (Python 3.10-3.12)
 ├── core/
-│   ├── console.py
-│   ├── command_parser.py
-│   ├── module_loader.py
-│   ├── attack_chain.py
-│   ├── progress_engine.py
-│   ├── session_manager.py
-│   ├── intelligence_engine.py
-│   ├── attack_graph.py
-│   ├── database.py
-│   ├── scheduler.py
-|   |── advanced_console.py
-|   |── console_style.py
-|   |── logger.py
-|   |── man_viewer.py
-|   |── module_info.py
-|   |── os_detection.py
-|   |── output.py
-|   |── pipeline.py
-|   |── report.py
-|   |── syntax_highligher.py
-|   |── tool_detection.py
-|   |── utils.py
-│   └── distributed_controller.py
-│
+│   ├── advanced_console.py    # Rich-enhanced interactive console
+│   ├── attack_chain.py        # Automated attack chain workflow
+│   ├── attack_graph.py        # Attack surface relationship graph
+│   ├── command_parser.py      # CLI command dispatch and parameter parser
+│   ├── console.py             # Base prompt-toolkit console loop
+│   ├── console_style.py       # Console styling and palette tokens
+│   ├── database.py            # SQLite connection, migration, and query layer
+│   ├── distributed_controller.py # Distributed socket worker controller (experimental)
+│   ├── intelligence_engine.py # Target profiling & empirical correlation
+│   ├── logger.py              # Log handler with automated secret scrubbing
+│   ├── man_viewer.py          # Terminal manual page reader
+│   ├── module_info.py         # Metadata registry for tools and commands
+│   ├── module_loader.py       # Dynamic module discovery and validation
+│   ├── os_detection.py        # OS environment and privilege detection
+│   ├── output.py              # Styled output panels and terminal banners
+│   ├── pipeline.py            # Multi-stage security assessment pipeline
+│   ├── progress_engine.py     # Real-time status execution spinners
+│   ├── report.py              # Text, JSON, and XSS-safe HTML report generator
+│   ├── scheduler.py           # Background scan job scheduler
+│   ├── session_manager.py     # Session target, scope, and intrusive state
+│   ├── syntax_highlighter.py  # Prompt-toolkit lexer for CLI commands
+│   ├── tool_detection.py      # External binary availability detector
+│   └── utils.py               # Target validator, scope policy, and safe runner
 ├── modules/
-│   ├── recon.py
-│   ├── scan.py
-│   ├── web_scan.py
-│   ├── exploit.py
-│   └── intelligence.py
-│
-|──man/
-|   |── recon.man
-|   |── scan.man
-|   |── web_scan.man
-|   └── exploit.man
+│   ├── recon.py               # OSINT & DNS reconnaissance
+│   ├── scan.py                # Network port and service scanner
+│   ├── web_scan.py            # Web application security inspector
+│   ├── exploit.py             # Targeted SQL injection tester (opt-in)
+│   └── intelligence.py        # Target intelligence gathering
+├── man/
+│   ├── attack_chain.man       # Manual page for automated attack chain
+│   ├── exploit.man            # Manual page for exploit module
+│   ├── intelligence.man       # Manual page for intelligence module
+│   ├── recon.man              # Manual page for recon module
+│   ├── scan.man               # Manual page for scan module
+│   └── web_scan.man           # Manual page for web scan module
 ├── ui/
-│   └── banner.py
-│
+│   └── banner.py              # Framework startup banner
 ├── data/
-│   ├── scan.db
-│   └── command_history.txt
-│
-└── docs/
-├── architecture.md
-└── usage.md
-
+│   ├── results.json           # Atomic JSON scan findings repository
+│   ├── sessions.json          # Persistent session cache
+│   └── command_history.txt    # Shell command history
+├── docs/
+│   ├── architecture.md        # Comprehensive technical architecture
+│   └── usage.md               # User guide and command reference
+├── tests/                     # Automated test suite (84+ pytest tests)
+├── config.json                # Active configuration file
+├── config.example.json        # Template configuration file
+├── requirements.txt           # Production dependencies
+├── requirements-dev.txt       # Development & test dependencies
+├── LICENSE                    # MIT License
+├── README.md                  # Project overview and documentation
+└── main.py                    # Framework entry point
 ```
 
 ---
 
 # ⚙️ Installation
 
-Clone repository:
+### Prerequisites
+- **Python**: 3.10, 3.11, or 3.12
+- **Operating System**: Linux (Ubuntu, Debian, Kali, Arch) or Windows (10/11)
+- **Git**
 
-```
-
+### 1. Clone the repository
+```bash
 git clone https://github.com/Bhuvaneshkumar1/cyber-framework.git
 cd cyber-framework
-
 ```
 
-create virtual environment
-
+### 2. Create and activate a virtual environment
+**On Linux / macOS:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
+
+**On Windows (PowerShell):**
+```powershell
 python -m venv venv
-
+.\venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
-
-```
-
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
+*(Optional) Install development and testing dependencies:*
+```bash
+pip install -r requirements-dev.txt
 ```
 
 ---
 
-# 📦 Dependencies
+# 🔧 Configuration
 
-Major dependencies used in this project:
+The framework loads configuration from `config.json` in the project root:
 
-+ Python 3.10+
-+ requests
-+ rich
-+ prompt_toolkit
-+ sqlite3
+```json
+{
+  "scope": {
+    "enforce_scope": true,
+    "allowed_targets": [
+      "localhost",
+      "127.0.0.1",
+      "::1"
+    ]
+  },
+  "safety": {
+    "allow_intrusive_actions": false,
+    "subprocess_timeout_seconds": 30
+  },
+  "logging": {
+    "file": "scan.log",
+    "redact_secrets": true
+  },
+  "distributed": {
+    "enabled": false,
+    "bind_host": "127.0.0.1",
+    "bind_port": 9090,
+    "auth_token": ""
+  }
+}
+```
+
+- **`scope.enforce_scope`**: When `true`, rejects targets not listed in `allowed_targets`.
+- **`safety.allow_intrusive_actions`**: Global safety switch for intrusive modules.
+- **`safety.subprocess_timeout_seconds`**: Maximum execution time per external process call.
+- **`logging.redact_secrets`**: Automatically masks passwords and API tokens in `scan.log`.
+
+---
 
 # ▶️ Running the Framework
 
-```
-
+Start Cyber Framework:
+```bash
 python main.py
-
 ```
 
-Select mode:
-
-```
-
-Beginner Mode
-Advanced Console
-
+You will be prompted to select an interface mode:
+```text
+1. Beginner Mode
+2. Advanced Console
 ```
 
 ---
 
 # 🟢 Beginner Mode
 
-Menu-driven operation.
+Beginner mode provides a menu-driven, guided interface ideal for quick assessments or learning:
 
-Example:
-
-```
-
-Select Mode → Beginner Mode
-Target → example.com
-Select Operation → Recon / Scan / Web Scan / Exploit / Attack Chain
-
-```
+1. Select **Beginner Mode**.
+2. Enter the target (e.g., `127.0.0.1` or `example.com`).
+3. Select an operation:
+   - `Recon`
+   - `Scan`
+   - `Web Scan`
+   - `Exploit` *(requires confirmation)*
+   - `Attack Chain`
+   - `Full Pipeline`
 
 ---
-
-# 🎯 Use Cases
-
-Cyber Framework can be used for:
-
- 1. Learning penetration testing workflows  
- 2. Practicing reconnaissance and scanning techniques  
- 3. Building custom cybersecurity modules  
- 4. Demonstrating attack chain automation  
- 5. Security research and experimentation
---- 
 
 # 💻 Advanced Console Mode
 
-Professional CLI console.
+Advanced Console Mode provides an interactive shell with tab auto-completion, command history, and dynamic prompts.
 
-Example:
+### Command Reference
 
-```
+| Command | Arguments | Description |
+|---|---|---|
+| `help`, `?` | None | Display available console commands |
+| `show modules` | None | List all discovered security modules |
+| `show options` | None | Display active target, module, and safety status |
+| `show info` | `[module]` | View tool metadata and usage for a module |
+| `show graph` | None | Visualize the attack surface relationship graph |
+| `show scans` | None | Display recorded scan findings from the database |
+| `use` | `<module>` | Select and switch into a specific module context |
+| `set target` | `<target>` | Set target domain, IP, CIDR, or URL |
+| `set intrusive` | `<true\|false>` | Authorize or disable intrusive vulnerability actions |
+| `run` | None | Execute the currently selected module |
+| `run pipeline` | `[--exploit]` | Run the multi-stage assessment pipeline |
+| `run attack_chain` | `[--exploit]` | Execute automated attack chain workflow |
+| `report` | `[txt\|json\|html]` | Export assessment report to text, JSON, or HTML |
+| `man` | `<module>` | View manual page for a module or workflow |
+| `back` | None | Deselect current module and return to main prompt |
+| `clear` | None | Clear terminal screen |
+| `exit`, `quit` | None | Exit the framework |
 
+### Interactive Walkthrough Example
+
+```text
 cyber> show modules
+Available Modules:
+  - recon
+  - scan
+  - web_scan
+  - exploit
+  - intelligence
 
-```
-```
+cyber> set target 127.0.0.1
+[+] Target set to: 127.0.0.1
 
-Available Modules
-recon
-scan
-web_scan
-exploit
-discovery
-enumeration
-intelligence
+cyber> use scan
+cyber(scan)> run
+[*] Starting scan against 127.0.0.1...
+[+] Discovered open port 80/tcp (http)
+[+] Discovered open port 443/tcp (https)
+[+] Scan findings saved to database.
 
-```
+cyber(scan)> show graph
+Target: 127.0.0.1
+  └── Port: 80/tcp (http)
+  └── Port: 443/tcp (https)
 
-Select module:
+cyber(scan)> report html
+[+] HTML report generated successfully: reports/report_127.0.0.1_20261015.html
 
-```
-
-cyber> use recon
-
-```
-
-Set target:
-
-```
-
-cyber(recon)> set target example.com
-
-```
-
-Run module:
-
-```
-
-cyber(recon)> run
-
-```
-
----
-# 🔐 Security Philosophy
-
-Cyber Framework follows a modular offensive security philosophy:
-
-1. Discover the target surface
-2. Enumerate services
-3. Analyze vulnerabilities
-4. Build an attack path
-5. Execute exploitation chain
-
-+ This approach mirrors real-world penetration testing methodologies.
----
-
-# ⚔️ Automatic Attack Chain
-
-Runs a full automated pipeline:
-
-```
-
-Recon
-↓
-Scan
-↓
-Web Scan
-↓
-Exploit
-
-```
-
-Command:
-
-```
-
-cyber> set target example.com
-cyber> run attack_chain
-
-```
-
----
----
-
-# 📊 Attack Graph Visualization
-
-Cyber Framework generates a logical **attack graph** representing relationships between discovered assets and vulnerabilities.
-
-Example flow:
-
-Target Domain
-↓
-Resolved IP
-↓
-Open Ports
-↓
-Detected Services
-↓
-Potential Exploits
-
-This allows researchers to understand:
-
-+ Attack paths
-+ Service exposure
-+ Exploitation opportunities  
----
-
-# ⌨️ Console Features
-
-| Feature | Description |
-|------|-------------|
-| TAB completion | Auto-complete commands |
-| Syntax highlighting | Colored commands |
-| History persistence | Arrow key navigation |
-| Dynamic prompts | `cyber(recon)>` style |
-
-Example:
-
-```
-
-cyber(recon)> set target google.com
-cyber(recon)> run
-
-```
-
----
----
-
-# 🧪 Example Workflow
-
-Example penetration testing workflow using Cyber Framework.
-
-Step 1 — Start the framework
-
-cyber> show modules
-
-Step 2 — Select reconnaissance module
-
-cyber> use recon
-
-Step 3 — Set target
-
-cyber(recon)> set target example.com
-
-Step 4 — Execute module
-
-cyber(recon)> run
-
-Step 5 — Run full attack chain
-```
-cyber> set target example.com
-cyber> run attack_chain
-```
----
-
-# 🧩 Available Modules
-
-| Module | Purpose |
-|------|---------|
-| recon | DNS & domain reconnaissance |
-| scan | Network port scanning |
-| web_scan | Web vulnerability scanning |
-| exploit | Exploitation phase |
-| intelligence | Target intelligence gathering |
-
----
-
-# 💾 Data Storage
-
-Framework stores persistent data:
-
-```
-
-data/scan.db
-data/command_history.txt
-
+cyber(scan)> back
+cyber> exit
 ```
 
 ---
 
-# 📚 Documentation
+# 🧪 Automated Testing
 
-Additional documentation:
+Cyber Framework includes an extensive automated test suite covering target validation, subprocess safety, scope policies, database migrations, atomic I/O, manual pages, and module contracts.
 
-📄 `docs/architecture.md`  
-📄 `docs/usage.md`
+Run the test suite with pytest:
+```bash
+python -m pytest tests -v
+```
 
----
-
-# 🛠 Troubleshooting
-
-Common issues and solutions.
-
-**Issue:** Modules not loading
-
-**Solution:** Check the modules directory and ensure Python files follow the module structure.
-
-Issue: Command history not saved
-
-**Solution:** Ensure the `data/command_history.txt` file exist
----
-
-# 🧑‍💻 Author
-
-Developed as a **modular cybersecurity framework for learning and research purposes.**
+All 84+ tests pass across Windows and Linux environments without external tool dependencies.
 
 ---
 
-# 📊 Project Statistics
+# 🛠 Troubleshooting & Limitations
 
-Project metrics:
+| Symptom | Cause | Resolution |
+|---|---|---|
+| `Target out of scope` | Scope enforcement is active in `config.json` | Add the target to `scope.allowed_targets` or set `"enforce_scope": false` in `config.json` for authorized testing. |
+| `Exploit module refused` | Intrusive actions disabled by default | Run `set intrusive true` in the console or set `"allow_intrusive_actions": true` in `config.json`. |
+| `External tool not found` | `nmap`, `theHarvester`, `nikto`, or `sqlmap` not in PATH | Install external tools or rely on automatic native Python fallbacks for DNS and TCP port scanning. |
+| `Port scanning permissions` | Raw SYN scans require administrative privileges on some OS | Cyber Framework defaults to unprivileged TCP connect (`-sT`) scans and native Python socket fallbacks. |
+| `Distributed controller` | Socket worker listener not running | The distributed controller is an experimental proof-of-concept disabled by default. Run locally or configure `distributed.enabled` and `auth_token` in `config.json`. |
 
-+ Language: Python
-+ Architecture: Modular CLI Framework
-+ Database: SQLite
-+ Interface: Interactive Console
-+ Modules: Recon, Scan, Web Scan, Exploit, Intelligence
 ---
+
 # ⚠️ Disclaimer
 
-This tool is intended **for educational and authorized security testing only**.
+This tool is designed **strictly for educational purposes and authorized security assessments**.
 
-Do **NOT** use this tool against systems without permission.
+Do **NOT** use this tool against targets without prior written authorization from the system owners. The authors and contributors assume no liability for misuse or damage caused by this software.
 
 ---
 
-# ⭐ Support the Project
+# 🔧 Roadmap & Planned Features
 
-If you find this project useful:
+The following capabilities are planned for future major releases:
+- Real-time Web UI dashboard
+- Async distributed worker node orchestration
+- Dynamic CVSS scoring integration
+- Automated PDF report exports
 
-+ ⭐ Star the repository  
-+ 🍴 Fork the project  
-+ 🛠 Contribute modules  
-+ 🐞 Report issues
 ---
-# 🔧 Planned Features
 
-Future improvements planned for Cyber Framework:
-
-+ Machine learning assisted vulnerability detection
-+ AI-assisted attack chain planning
-+ Web dashboard interface
-+ API based distributed scanning nodes
-+ Integration with vulnerability scanners
-+ Automated report generation
----
 # 📜 License
 
-MIT License
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for complete details.
 
 ---
 
-# 🏆 Project Highlights
+# 👨‍💻 Author
 
-Cyber Framework demonstrates several advanced engineering concepts:
-
-• Modular cybersecurity architecture  
-• Interactive CLI framework design  
-• Automated attack chain orchestration  
-• Distributed scanning capability  
-• Intelligence driven reconnaissance  
-
-The project is designed as a **research oriented penetration testing framework** and learning platform for cybersecurity practitioners.
----
-
-# 👨‍💻 Contributors
-
-- Bhuvaneshkumar
+**Bhuvaneshkumar** — *Modular Cybersecurity Framework*

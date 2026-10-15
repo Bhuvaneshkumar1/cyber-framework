@@ -1,0 +1,47 @@
+NAME
+	attack_chain - automated multi-phase penetration testing workflow.
+
+DESCRIPTION
+	Orchestrate a sequential multi-stage penetration testing workflow against
+	a target: Reconnaissance -> Port Scanning -> Web Scanning. Intrusive
+	actions (such as exploitation) are strictly skipped by default to prevent
+	unintended damage, unless explicit opt-in is provided by the user.
+
+UNDERLYING TOOL
+	Cyber Framework Attack Chain Engine
+
+EXECUTION
+	Native internal execution via core/attack_chain.py
+
+USAGE
+	run attack_chain
+
+MODULE OPTION
+	target - target domain or IP address.
+
+COMMANDS
+	set target <target>
+		Define the target domain or IP.
+
+	set intrusive true
+		Optionally allow intrusive verification during chain execution.
+
+	run attack_chain
+		Execute the multi-phase attack chain.
+
+EXAMPLE
+	set target 127.0.0.1
+	run attack_chain
+
+OUTPUT
+	Consolidated phase results, open ports saved to the SQLite database,
+	and execution logs.
+
+REQUIREMENTS
+	Valid authorized target defined in session.
+
+AUTHOR
+	Bhuvaneshkumar
+
+VERSION
+	Version 1.0

@@ -2,14 +2,17 @@ NAME
 	recon - reconnaissance and information gathering module.
 
 DESCRIPTION
-	Perform passive reconnaissance on a target domain using TheHarvester. The module collects publicly 
-	available information such as emails,subdomains ,hosts and related infrastructure from open source.
+	Perform reconnaissance on a target domain or IP. The module gathers
+	subdomain, DNS, and open-source infrastructure information using theHarvester.
+	When theHarvester is not installed, it automatically falls back to native
+	DNS query resolution (A, CNAME) and reverse IP lookups.
 
 UNDERLYING TOOL
-	theHarvester
+	theHarvester (with native Python DNS fallback)
 
 EXECUTION
-	theHarvester -d <target> -b google
+	theHarvester -d <target> -b all
+	(Fallback: native socket.getaddrinfo / nslookup)
 
 USAGE
 	use recon
@@ -17,28 +20,31 @@ USAGE
 MODULE OPTION
 	target - target domain or IP.
 
-COMMANDS 
+COMMANDS
 	show modules
 		Display available modules.
 
-	set target<domain>
-		Define the target domain.
+	set target <domain>
+		Define the target domain or IP.
 
 	run
 		Execute the reconnaissance module.
-EXAMPLE 
+
+EXAMPLE
 	use recon
 	set target example.com
 	run
 
 OUTPUT
-	Display discovered email address , hostname, and subdomains related to the specified domain.
+	Structured result displaying resolved IP addresses, hostnames,
+	subdomains, and discovered email addresses.
 
 REQUIREMENTS
-	theHarvester must be installed and available in the system path.
+	theHarvester (optional, recommended); Python standard library socket
+	library is used as automatic fallback.
 
-AUTHOR 
-	Bhuvanesh kumar
+AUTHOR
+	Bhuvaneshkumar
 
 VERSION
-	Verion 1.0
+	Version 1.0

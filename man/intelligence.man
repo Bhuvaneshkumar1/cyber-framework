@@ -1,0 +1,49 @@
+NAME
+	intelligence - target intelligence gathering and correlation module.
+
+DESCRIPTION
+	Analyze targets and correlate empirical scan data to assess attack
+	surface, host characteristics, and potential vulnerability vectors.
+	The intelligence module gathers DNS records, checks well-known network
+	service heuristics, and generates actionable analysis distinguishing
+	empirical facts from protocol hypotheses.
+
+UNDERLYING TOOL
+	Cyber Framework Intelligence Engine (native Python)
+
+EXECUTION
+	Native internal execution via core/intelligence_engine.py
+
+USAGE
+	use intelligence
+
+MODULE OPTION
+	target - target domain or IP address.
+
+COMMANDS
+	show modules
+		Display available modules.
+
+	set target <target>
+		Define the target domain or IP.
+
+	run
+		Execute the intelligence analysis module.
+
+EXAMPLE
+	use intelligence
+	set target example.com
+	run
+
+OUTPUT
+	Target profile summary detailing empirical DNS records, open port
+	analysis, detected services, and prioritized verification steps.
+
+REQUIREMENTS
+	Pure Python (no external binaries required).
+
+AUTHOR
+	Bhuvaneshkumar
+
+VERSION
+	Version 1.0

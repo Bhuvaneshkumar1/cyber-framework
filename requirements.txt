@@ -1,6 +1,12 @@
-prompt_toolkit
-rich
-questionary
-pyfiglet
-apscheduler
-networkx
+# Core runtime dependencies
+prompt_toolkit>=3.0.0
+rich>=13.0.0
+requests>=2.28.0
+
+# Enhanced UI & interactive console features (optional)
+questionary>=2.0.0
+pyfiglet>=0.8.post1
+
+# Advanced scheduling & graphing capabilities (optional)
+apscheduler>=3.10.0
+networkx>=3.0
